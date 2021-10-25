@@ -1,2 +1,4 @@
-# Ignore my inability to have basic cybersecurity
-**/nothing_to_see_here.txt*
+# Ignore my inability to have basic cybersecurity.
+**/nothing_to_see_here.txt
+# Ignore vim swap files.
+**.sw*
