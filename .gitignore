@@ -2,3 +2,6 @@
 **/nothing_to_see_here.txt
 # Ignore vim swap files.
 **.sw*
+# Ignore Binaries.
+**.o
+# Ignore Compiled Executable.
