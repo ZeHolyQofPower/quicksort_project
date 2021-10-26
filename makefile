@@ -15,4 +15,4 @@ lint-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.cpp \
 	cpplint.py --root=./ $^
 
 clean:
-	rm ./*.o
+	@rm ./*.o
