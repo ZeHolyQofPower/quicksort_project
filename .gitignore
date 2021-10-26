@@ -5,3 +5,4 @@
 # Ignore Binaries.
 **.o
 # Ignore Compiled Executable.
+**/InputFileGenerator
