@@ -3,11 +3,14 @@
 COMPILER = g++ -std=c++11 -Wall -I .
 
 ## QuickSort ##
-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.o
+# Driver needs our file gen linked in.
+gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.o InputFileGenerator.o
 	$(COMPILER) -c $@ $^
 
+# Driver binary needs file gen header on compilation.
 gazdecki_adam_QuickSort.o: gazdecki_adam_QuickSort.cpp \
-                           gazdecki_adam_QuickSort.h
+                           gazdecki_adam_QuickSort.h \
+                           InputFileGenerator.h
 	$(COMPILER) -o $@ $<
 
 lint-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.cpp \
@@ -16,11 +19,19 @@ lint-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.cpp \
 
 ## Input file generator ##
 # TODO "used to generate input ASCII files (Do NOT include in makefile)"
-InputFileGenerator: InputFileGenerator.cpp
-	$(COMPILER) $^ $@
+InputFileGenerator: InputFileGenerator.o
+	$(COMPILER) -c $@ $^
 
-lint-InputFileGenerator: InputFileGenerator.cpp
+InputFileGenerator.o: InputFileGenerator.cpp \
+                      InputFileGenerator.h
+	$(COMPILER) -o $@ $<
+
+lint-InputFileGenerator: InputFileGenerator.cpp \
+                         InputFileGenerator.h 
 	cpplint.py --root=./ $^
 
+## Utility Commands ##
 clean:
 	@rm ./*.o
+
+lint-all: lint-gazdecki_adam_QuickSort lint-InputFileGenerator
