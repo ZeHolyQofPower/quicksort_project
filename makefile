@@ -1,35 +1,43 @@
 # TODO This makefile needs to contain directions to compile and use this
 # project. I should probably make them an exact duplicate of the README.md
-COMPILER = g++ -std=c++11 -Wall -I .
+BASE_COMPILER = g++
+COMPILER_ARGS = -std=c++11
+COMPILER_ARGS += -Wall
+COMPILER_ARGS += -I .
+
+LINK = $(BASE_COMPILER) $(COMPILER_ARGS) -o
+COMPILE = $(BASE_COMPILER) $(COMPILER_ARGS) -c
+LINT = ~/Downloads/cpplint-master/cpplint.py --root=./
 
 ## QuickSort ##
 # Our QuickSort Project interacts with input file generator through arguments.
 gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.o
-	$(COMPILER) -c $@ $^
+	$(LINK) $@ $<
 
 gazdecki_adam_QuickSort.o: gazdecki_adam_QuickSort.cpp \
                            gazdecki_adam_QuickSort.h
-	$(COMPILER) -o $@ $<
+	$(COMPILE) $<
 
 lint-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.cpp \
                               gazdecki_adam_QuickSort.h
-	cpplint.py --root=./ $^
+	$(LINT) $^
 
 ## Input file generator ##
 # TODO "used to generate input ASCII files (Do NOT include in makefile)"
 InputFileGenerator: InputFileGenerator.o
-	$(COMPILER) -c $@ $^
+	$(LINK) $@ $<
 
 InputFileGenerator.o: InputFileGenerator.cpp \
                       InputFileGenerator.h
-	$(COMPILER) -o $@ $<
+	$(COMPILE) $<
 
 lint-InputFileGenerator: InputFileGenerator.cpp \
                          InputFileGenerator.h 
-	cpplint.py --root=./ $^
+	$(LINT) $^
 
 ## Utility Commands ##
 clean:
 	@rm ./*.o
+	@rm InputFileGenerator
 
 lint-all: lint-gazdecki_adam_QuickSort lint-InputFileGenerator
