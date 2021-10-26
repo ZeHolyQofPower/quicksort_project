@@ -3,14 +3,12 @@
 COMPILER = g++ -std=c++11 -Wall -I .
 
 ## QuickSort ##
-# Driver needs our file gen linked in.
-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.o InputFileGenerator.o
+# Our QuickSort Project interacts with input file generator through arguments.
+gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.o
 	$(COMPILER) -c $@ $^
 
-# Driver binary needs file gen header on compilation.
 gazdecki_adam_QuickSort.o: gazdecki_adam_QuickSort.cpp \
-                           gazdecki_adam_QuickSort.h \
-                           InputFileGenerator.h
+                           gazdecki_adam_QuickSort.h
 	$(COMPILER) -o $@ $<
 
 lint-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.cpp \
