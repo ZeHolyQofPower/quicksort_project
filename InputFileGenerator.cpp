@@ -15,6 +15,25 @@ using std::endl;
  */
 
 int main(int argc, char* argv[]) {
+  // Check Command-line Usage. If wrong, Stop.
+  if (argc != 3) {
+    //
+    cout << "InputFileGenerator: argument error" << endl << endl;
+    cout << "Usage:" << endl << endl;
+    cout << "./InputFileGenerator {file "
+         <<  "| \"number of unsorted floating-point numbers\"}"
+         << endl << endl;
+    return 1;  // Incorrect argument number.
+  }
+  cout << "arg string 1: " << argv[1] << endl;
+  cout << "arg string 2: " << argv[2] << endl;
+  // Check if file already exists. If so, abort.
+  if (0) {
+    // nope.
+    return 2;  // File not found.
+  }
+  // Usage information:
+  cout << "--Good Job--" << endl;
   return 0;
 }
 
