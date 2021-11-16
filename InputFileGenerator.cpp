@@ -30,12 +30,19 @@ int main(int argc, char* argv[]) {
   const std::string file_to_write_to = argv[1];
   const std::size_t quantity_of_unsorted_numbers = atoi(argv[2]);  // rets 0 if in error
   // Check if file already exists. If so, abort.
-  const DIR* directory_ptr = opendir("//");
+  DIR* directory_ptr = opendir(".");
   if (directory_ptr == NULL) {
-    cout << "InputFileGenerator: file argument error" << endl << endl;
-    cout << "File not Found" << endl << endl;
-    return 2;  // File not found.
+    cout << "InputFileGenerator: OS directory error" << endl << endl;
+    cout << "Directory not Found. You may be on Windows." << endl << endl;
+    return 2;  // "." Directory not found. This should never happen?
   }
+  struct dirent* dir_itr;
+  // You cannot do pointer arithmetic with directory pointers.
+  // All guides online use something similar to this while loop.
+  while (( dir_itr = readdir(directory_ptr) ) != NULL) {
+    cout << dir_itr->d_name << endl;
+  }
+  closedir(directory_ptr);
   // Usage information:
   cout << "--Good Job--" << endl;
   cout << "arg string 1: " << file_to_write_to << endl;
