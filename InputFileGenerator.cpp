@@ -4,6 +4,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
+#include <dirent.h>  // Used for directory file checking.
 /* The purpose of this file (and its header) are to generate a file.
  * This file will be an ASCII file of random, unsorted, floating-point numbers.
  * Their range should be: [-100, 100]
@@ -25,15 +26,20 @@ int main(int argc, char* argv[]) {
          << endl << endl;
     return 1;  // Incorrect argument number.
   }
-  cout << "arg string 1: " << argv[1] << endl;
-  cout << "arg string 2: " << argv[2] << endl;
+  // Take in cmd-line arguments.
+  const std::string file_to_write_to = argv[1];
+  const std::size_t quantity_of_unsorted_numbers = atoi(argv[2]);  // rets 0 if in error
   // Check if file already exists. If so, abort.
-  if (0) {
-    // nope.
+  const DIR* directory_ptr = opendir("//");
+  if (directory_ptr == NULL) {
+    cout << "InputFileGenerator: file argument error" << endl << endl;
+    cout << "File not Found" << endl << endl;
     return 2;  // File not found.
   }
   // Usage information:
   cout << "--Good Job--" << endl;
+  cout << "arg string 1: " << file_to_write_to << endl;
+  cout << "arg string 2: " << quantity_of_unsorted_numbers << endl;
   return 0;
 }
 
