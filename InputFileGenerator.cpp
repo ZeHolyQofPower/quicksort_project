@@ -20,7 +20,7 @@ using std::endl;
 int main(int argc, char* argv[]) {
   // Check Command-line Usage. If wrong, Stop.
   if (argc != 3) {
-    //
+    // Usage information:
     cout << "InputFileGenerator: argument error" << endl << endl;
     cout << "Usage:" << endl << endl;
     cout << "./InputFileGenerator {file "
@@ -31,7 +31,6 @@ int main(int argc, char* argv[]) {
   // Take in cmd-line arguments.
   const std::string file_to_write_to = argv[1];
   const std::size_t quantity_of_unsorted_numbers = atoi(argv[2]);
-  // TODO(me) check for: rets 0 if in error /\
   // Check if file already exists. If so, abort.
   DIR* directory_ptr = opendir(".");
   if (directory_ptr == NULL) {
@@ -51,15 +50,21 @@ int main(int argc, char* argv[]) {
     cout << "InputFileGenerator: File already exists error" << endl << endl;
     cout << "Entered file name already found. No action will be taken."
          << endl << endl;
+    closedir(directory_ptr);
     return 3;  // File already exists. Behavior is undefined so abort.
     }
     // cout << dir_itr->d_name << endl;
   }
   closedir(directory_ptr);
-  // Usage information:
-  cout << "--Good Job--" << endl;
-  cout << "arg string 1: " << file_to_write_to << endl;
-  cout << "arg string 2: " << quantity_of_unsorted_numbers << endl;
+  // Check number input to see if was input correctly. atoi() Overflows.
+  if (atoi(argv[2]) <= 0 && atoi(argv[2]) <= 2147483647) {
+    cout << "InputFileGenerator: Number argument error" << endl << endl;
+    cout << "Entered number must be positive and non-zero." << endl << endl;
+    return 4;  // Number must be a non-zero positive integer.
+  }
+  cout << "--Success! End of input checks--" << endl;
+  cout << "argv[2]: " << argv[2] << endl;
+  cout << "atoi(argv[2]): " << quantity_of_unsorted_numbers << endl;
   return 0;
 }
 
