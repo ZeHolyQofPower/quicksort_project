@@ -5,6 +5,8 @@ using std::cout;
 using std::cin;
 using std::endl;
 #include <dirent.h>  // Used for directory file checking.
+#include <string>  // Used for argument processing.
+// TODO(me) I'm not sure why cpplint made me add this line?
 /* The purpose of this file (and its header) are to generate a file.
  * This file will be an ASCII file of random, unsorted, floating-point numbers.
  * Their range should be: [-100, 100]
@@ -28,7 +30,8 @@ int main(int argc, char* argv[]) {
   }
   // Take in cmd-line arguments.
   const std::string file_to_write_to = argv[1];
-  const std::size_t quantity_of_unsorted_numbers = atoi(argv[2]);  // rets 0 if in error
+  const std::size_t quantity_of_unsorted_numbers = atoi(argv[2]);
+  // TODO(me) check for: rets 0 if in error /\
   // Check if file already exists. If so, abort.
   DIR* directory_ptr = opendir(".");
   if (directory_ptr == NULL) {
@@ -39,8 +42,18 @@ int main(int argc, char* argv[]) {
   struct dirent* dir_itr;
   // You cannot do pointer arithmetic with directory pointers.
   // All guides online use something similar to this while loop.
-  while (( dir_itr = readdir(directory_ptr) ) != NULL) {
-    cout << dir_itr->d_name << endl;
+  while ((dir_itr = readdir(directory_ptr)) != NULL) {
+    // TODO(me) Why am I not allowed to write the line?:
+    /* if ("makefile" == (dir_itr->d_name)) { */
+    // What does the warning mean?
+    if (file_to_write_to == (dir_itr->d_name)) {
+      // cout << "===Look\\/!===" << endl;
+    cout << "InputFileGenerator: File already exists error" << endl << endl;
+    cout << "Entered file name already found. No action will be taken."
+         << endl << endl;
+    return 3;  // File already exists. Behavior is undefined so abort.
+    }
+    // cout << dir_itr->d_name << endl;
   }
   closedir(directory_ptr);
   // Usage information:
