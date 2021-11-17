@@ -12,8 +12,8 @@
  */
 int main(int argc, char* argv[]) {
   /* Tweakable Constants */
-  const string output_directory = "./fake_dir";
-  const char* output_directory_ptr = "./fake_dir";
+  // const string output_directory = "./fake_dir";
+  const char* output_directory_ptr = ".";
   // TODO(me) Why cant I just point a char* to an existing string?
   // They are both const, so I don't think there's any overwrite danger?
   const double mu = 0.0;
@@ -42,8 +42,10 @@ int main(int argc, char* argv[]) {
     cout << "InputFileGenerator: Directory error" << endl << endl;
     cout << "Directory for output not found, or you may be on Windows."
          << endl << endl;
+/*
     cout << "If error persists, please create directory named:" << endl;
     cout << output_directory << endl << endl;
+*/
     return -2;  // "." Directory not found. This should never happen?
   }
   struct dirent* dir_itr;
@@ -71,9 +73,9 @@ int main(int argc, char* argv[]) {
   }
   /* Create and write to file. */
   std::ofstream file_stream;
-  const string full_output_path = output_directory + "/" + file_to_write_to;
-cout << full_output_path << endl;
-  file_stream.open("buh");
+  // const string full_output_path = output_directory + "/" + file_to_write_to;
+  // cout << full_output_path << endl;
+  file_stream.open(file_to_write_to);
   // Number generation using normal distribution.
   std::random_device rand_dev;
   std::default_random_engine generator{rand_dev()};
