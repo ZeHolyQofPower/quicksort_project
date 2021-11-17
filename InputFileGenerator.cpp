@@ -12,7 +12,10 @@
  */
 int main(int argc, char* argv[]) {
   /* Tweakable Constants */
-  const char* output_directory = ".";
+  const string output_directory = "./fake_dir";
+  const char* output_directory_ptr = "./fake_dir";
+  // TODO(me) Why cant I just point a char* to an existing string?
+  // They are both const, so I don't think there's any overwrite danger?
   const double mu = 0.0;
   const double sigma = 50.0;
   const string delimiter = " ";
@@ -33,10 +36,14 @@ int main(int argc, char* argv[]) {
   const size_t quantity_of_unsorted_numbers = atoi(argv[2]);
   /* Check command line arguments' preconditions before using */
   // Check if file already exists. If so, abort.
-  DIR* directory_ptr = opendir(output_directory);
+  DIR* directory_ptr = opendir(output_directory_ptr);
+  // TODO(me) Why does this require a char* input? Why not any old string?
   if (directory_ptr == NULL) {
-    cout << "InputFileGenerator: OS directory error" << endl << endl;
-    cout << "Directory not Found. You may be on Windows." << endl << endl;
+    cout << "InputFileGenerator: Directory error" << endl << endl;
+    cout << "Directory for output not found, or you may be on Windows."
+         << endl << endl;
+    cout << "If error persists, please create directory named:" << endl;
+    cout << output_directory << endl << endl;
     return -2;  // "." Directory not found. This should never happen?
   }
   struct dirent* dir_itr;
@@ -64,7 +71,9 @@ int main(int argc, char* argv[]) {
   }
   /* Create and write to file. */
   std::ofstream file_stream;
-  file_stream.open(file_to_write_to);
+  const string full_output_path = output_directory + "/" + file_to_write_to;
+cout << full_output_path << endl;
+  file_stream.open("buh");
   // Number generation using normal distribution.
   std::random_device rand_dev;
   std::default_random_engine generator{rand_dev()};
@@ -72,8 +81,6 @@ int main(int argc, char* argv[]) {
   std::normal_distribution<double> distribution(mu, sigma);
   double tmp_number;
   size_t written_number_count = 0;
-  // TODO(me) I need to move and rearrange these constants and values.
-  // Probably into a header
   while (written_number_count < quantity_of_unsorted_numbers) {
     // Generate number.
     tmp_number = distribution(generator);
