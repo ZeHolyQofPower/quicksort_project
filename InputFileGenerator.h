@@ -7,7 +7,6 @@
 #include <dirent.h>  // Used for directory file checking.
 #include <iostream>  // Used for debugging output.
 using std::cout;
-using std::cin;
 using std::endl;
 // TODO(me) I'm not sure why cpplint made me add this line? I suspect atoi().
 #include <string>  // Used for argument processing.
