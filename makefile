@@ -39,5 +39,10 @@ lint-InputFileGenerator: InputFileGenerator.cpp \
 clean:
 	@rm ./*.o
 	@rm InputFileGenerator
+	@rm .generated_*
+
+clean-generated-files:
+	@rm .generated_*
 
 lint-all: lint-gazdecki_adam_QuickSort lint-InputFileGenerator
+	echo "All linting successful!"

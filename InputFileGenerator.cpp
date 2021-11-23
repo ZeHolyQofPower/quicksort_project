@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
   const string kDelimiter = " ";
   const double kMinRange = -100.0;
   const double kMaxRange = 100.0;
+  const string kFilePrefix = ".generated_";  // This allows reasonable cleanup.
   /* Check Command-line Usage. */
   if (argc != 3) {
     // Usage information:
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]) {
     return -1;  // Incorrect argument number.
   }
   // Take in cmd-line arguments.
-  const string kFileToWriteTo = argv[1];
+  const string kFileToWriteTo = kFilePrefix + argv[1];
   const size_t kQuantityOfUnsortedNumbers = atoi(argv[2]);
   /* Check command line arguments' preconditions before using */
   // Check if file already exists. If so, abort.
