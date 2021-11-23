@@ -36,9 +36,12 @@ lint-InputFileGenerator: InputFileGenerator.cpp \
 	$(LINT) $^
 
 ## Utility Commands ##
+# TODO(me) I'm having trouble ordering these logically?
+# How can I handle larger projects using this kind of clean cmd?
 clean:
 	@rm ./*.o
 	@rm InputFileGenerator
+	@rm gazdecki_adam_QuickSort
 	@rm .generated_*
 
 clean-generated-files:
