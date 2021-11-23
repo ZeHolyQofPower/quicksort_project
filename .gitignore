@@ -9,3 +9,6 @@
 **/gazdecki_adam_QuickSort
 # Ignore Generated Files.
 **/.generated_*
+# Ignore Testing Files.
+**/input.txt
+**/output.txt
