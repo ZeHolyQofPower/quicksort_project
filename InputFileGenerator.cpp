@@ -13,14 +13,14 @@
 int main(int argc, char* argv[]) {
   /* Tweakable Constants */
   // const string output_directory = "./fake_dir";
-  const char* output_directory_ptr = ".";
+  const char* kOutputDirectoryPtr = ".";
   // TODO(me) Why cant I just point a char* to an existing string?
   // They are both const, so I don't think there's any overwrite danger?
-  const double mu = 0.0;
-  const double sigma = 50.0;
-  const string delimiter = " ";
-  const double min_range = -100.0;
-  const double max_range = 100.0;
+  const double kMu = 0.0;
+  const double kSigma = 50.0;
+  const string kDelimiter = " ";
+  const double kMinRange = -100.0;
+  const double kMaxRange = 100.0;
   /* Check Command-line Usage. */
   if (argc != 3) {
     // Usage information:
@@ -32,11 +32,11 @@ int main(int argc, char* argv[]) {
     return -1;  // Incorrect argument number.
   }
   // Take in cmd-line arguments.
-  const string file_to_write_to = argv[1];
-  const size_t quantity_of_unsorted_numbers = atoi(argv[2]);
+  const string kFileToWriteTo = argv[1];
+  const size_t kQuantityOfUnsortedNumbers = atoi(argv[2]);
   /* Check command line arguments' preconditions before using */
   // Check if file already exists. If so, abort.
-  DIR* directory_ptr = opendir(output_directory_ptr);
+  DIR* directory_ptr = opendir(kOutputDirectoryPtr);
   // TODO(me) Why does this require a char* input? Why not any old string?
   if (directory_ptr == NULL) {
     cout << "InputFileGenerator: Directory error" << endl << endl;
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     // TODO(me) Why am I not allowed to write the line?:
     /* if ("makefile" == (dir_itr->d_name)) { */
     // What does the warning mean?
-    if (file_to_write_to == (dir_itr->d_name)) {
+    if (kFileToWriteTo == (dir_itr->d_name)) {
     cout << "InputFileGenerator: File already exists error" << endl << endl;
     cout << "Entered file name already found. No action will be taken."
          << endl << endl;
@@ -67,28 +67,28 @@ int main(int argc, char* argv[]) {
   // Check number input to see if was input correctly. atoi() Overflows.
   if (atoi(argv[2]) <= 0 && atoi(argv[2]) <= 2147483647) {
     cout << "InputFileGenerator: Number argument error" << endl << endl;
-    cout << "Entered number must be positive, non-zero, and not overflow."
+    cout << "Entered number kMust be positive, non-zero, and not overflow."
          << endl << endl;
-    return -4;  // Number must be a non-zero positive integer.
+    return -4;  // Number kMust be a non-zero positive integer.
   }
   /* Create and write to file. */
   std::ofstream file_stream;
-  // const string full_output_path = output_directory + "/" + file_to_write_to;
+  // const string full_output_path = output_directory + "/" + kFileToWriteTo;
   // cout << full_output_path << endl;
-  file_stream.open(file_to_write_to);
+  file_stream.open(kFileToWriteTo);
   // Number generation using normal distribution.
   std::random_device rand_dev;
   std::default_random_engine generator{rand_dev()};
   // I don't really understand why curly brackets to pass into engine?
-  std::normal_distribution<double> distribution(mu, sigma);
+  std::normal_distribution<double> distribution(kMu, kSigma);
   double tmp_number;
   size_t written_number_count = 0;
-  while (written_number_count < quantity_of_unsorted_numbers) {
+  while (written_number_count < kQuantityOfUnsortedNumbers) {
     // Generate number.
     tmp_number = distribution(generator);
     // Check bounds.
-    if ((tmp_number >= min_range) && (tmp_number <= max_range)) {
-      file_stream << tmp_number << delimiter;
+    if ((tmp_number >= kMinRange) && (tmp_number <= kMaxRange)) {
+      file_stream << tmp_number << kDelimiter;
       written_number_count++;
       // Print to terminal.
 /*
