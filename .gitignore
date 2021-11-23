@@ -6,3 +6,6 @@
 **.o
 # Ignore Compiled Executable.
 **/InputFileGenerator
+**/gazdecki_adam_QuickSort
+# Ignore Generated Files.
+**/.generated_*
