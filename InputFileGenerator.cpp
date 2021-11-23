@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
   const double kMinRange = -100.0;
   const double kMaxRange = 100.0;
   const string kFilePrefix = ".generated_";  // This allows reasonable cleanup.
-  /* Check Command-line Usage. */
+  /* Check Command-Line Usage. */
   if (argc != 3) {
     // Usage information:
     cout << "InputFileGenerator: argument error" << endl << endl;
