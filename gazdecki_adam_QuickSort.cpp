@@ -11,9 +11,64 @@
  * -numbers will be written to a specific existing file.
  */
 #include <gazdecki_adam_QuickSort.h>
-// #include <InputFileGenerator.h>
 
 int main(int argc, char* argv[]) {
+  /* Tweakable Constants */
+  const char* kSearchDirectoryPtr = ".";
+  /* Check Command-Line Usage */
+  if (argc != 3) {
+    // Usage information:
+    cout << "gazdecki_adam_QuickSort: Argument error" << endl << endl;
+    cout << "Usage:" << endl << endl;
+    cout << "./gazdecki_adam_QuickSort {input file | output file}"
+         << endl << endl;
+    return -1;  // Incorrect argument number.
+  }
+  // Take in cmd-line arguments.
+  const string kUnsortedInputFile = argv[1];
+  const string kSortedOutputFile = argv[2];
+  /* Check command line arguments' preconditions before using */
+  DIR* directory_ptr = opendir(kSearchDirectoryPtr);
+  // Check if directory pointer is working correctly.
+  if (directory_ptr == NULL) {
+    cout << "gazdecki_adam_QuickSort: Directory error" << endl << endl;
+    cout << "Directory for output not found, or you may be on Windows."
+         << endl << endl;
+    return -2;  // "." Directory not found. This feature is not implemented.
+  }
+  // Check if output file already exists. If so, abort.
+  struct dirent* dir_itr;
+  while ((dir_itr = readdir(directory_ptr)) != NULL) {
+    if (kSortedOutputFile == (dir_itr->d_name)) {
+    cout << "gazdecki_adam_QuickSort: Output file already exists error"
+         << endl << endl;
+    cout << "Entered file name already found. No action will be taken."
+         << endl << endl;
+    closedir(directory_ptr);
+    return -3;  // File already exists. Behavior is undefined so abort.
+    }
+  }
+  closedir(directory_ptr);
+  // Check if input file actually exists.
+  bool foundInputFile = false;
+  while ((dir_itr = readdir(directory_ptr)) != NULL) {
+    char* checky = "...checking: " + (dir_itr->d_name) + "...";
+    cout << checky << endl;
+    if (kUnsortedInputFile == (dir_itr->d_name)) {
+      // We found it. Good!
+      foundInputFile = true;
+    }
+  }
+  if (!foundInputFile) {
+    cout << "gazdecki_adam_QuickSort: Input file not found error"
+         << endl << endl;
+    cout << "Entered file name not found. No action will be taken."
+         << endl << endl;
+    closedir(directory_ptr);
+    return -4;  // Input file was not found or entered correctly. Abort.
+  }
+  closedir(directory_ptr);
+  /* Sorting? */
   return 0;
 }
 // ~End of File.
