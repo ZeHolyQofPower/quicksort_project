@@ -48,12 +48,18 @@ int main(int argc, char* argv[]) {
     return -3;  // File already exists. Behavior is undefined so abort.
     }
   }
-  closedir(directory_ptr);
   // Check if input file actually exists.
+  // TODO(me) This is currently broken. I don't know why?
+/*
   bool foundInputFile = false;
-  while ((dir_itr = readdir(directory_ptr)) != NULL) {
-    char* checky = "...checking: " + (dir_itr->d_name) + "...";
+  string dir_name;
+  struct dirent* dir_itr2;
+  // cout << "===before loop===" << endl;
+  while ((dir_itr2 = readdir(directory_ptr)) != NULL) {
+    dir_name = (dir_itr->d_name);
+    string checky = "...checking: " + dir_name + "...";
     cout << checky << endl;
+    // No matter what I do, this loop is never entered?
     if (kUnsortedInputFile == (dir_itr->d_name)) {
       // We found it. Good!
       foundInputFile = true;
@@ -67,7 +73,8 @@ int main(int argc, char* argv[]) {
     closedir(directory_ptr);
     return -4;  // Input file was not found or entered correctly. Abort.
   }
-  closedir(directory_ptr);
+*/
+  closedir(directory_ptr);  // Finally done searching directories.
   /* Sorting? */
   return 0;
 }
