@@ -73,39 +73,47 @@ int main(int argc, char* argv[]) {
   /* Read In From File */
   //double* number_array = ReadFromFile(kUnsortedInputFile);
   double *number_array = nullptr;
-  ReadFromFile(kUnsortedInputFile, &number_array);
-  for (size_t i = 0; i < 4; i++)
+  const size_t array_length = ReadFromFile(kUnsortedInputFile, &number_array);
+  for (size_t i = 0; i < array_length; i++)
     cout << number_array[i] << endl;
   /* Sorting */
   /* Write To File */
   return 0;           
 }  // End of Main.
 
-void ReadFromFile(const string file_name, double** array) {
-  // Thank you a_m0d for asking 1398307. I finally understand everything.
+const size_t ReadFromFile(const string file_name, double** array) {
   std::ifstream input_stream(file_name);
   if (!input_stream) {
     cout << "gazdecki_adam_QuickSort: ReadfromFile function error!"
          << endl << endl;
-    cout << "File stream opened incorrectly." << endl
+    cout << "File exists, but file stream opened incorrectly." << endl
          << "Is the file encrypted or corrupted somehow?" << endl << endl; 
     cout << "Program's behavior is undefined beyond this point." << endl
          << "Have a nice day!" << endl << endl;
-    return;  // File exists but opened incorrectly. How?
+    return -1;  // File exists but opened incorrectly. How?
   }
-  // Find how many numbers are here so we can allocate memory.
+  // Find how many elements are in our input file.
+  // Thanks handy-dandy iterator std library!
   size_t quantity_of_numbers = 0;
   std::istream_iterator<double> start(input_stream), end;
   quantity_of_numbers = std::distance(start, end);
+  // Allocate memory and take data into array.
   *array = new double[quantity_of_numbers];
-  cout << quantity_of_numbers << endl;
+  // Move input file stream back to beginning of file.
+  input_stream.clear();
+  input_stream.seekg(0);
   // Fun fact about pointers-to-pointers. The abreviated square bracket syntax
   // begins to break-down and has undefined behavior. Example:
   // *array[i] is... not nice.
+  string tmp = "";
   double* array_end = *array + quantity_of_numbers;
   for (double* itr = *array; itr < array_end; itr++) {
-    *itr = 0.8;
+    input_stream >> tmp;
+    *itr = stof(tmp);
   }
+  input_stream.close();
+  // Don't forget to return the length of your new array!
+  return quantity_of_numbers;
 }
 
 void QuickSort(size_t left_itr, size_t right_itr, double& array) {
