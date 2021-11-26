@@ -71,14 +71,13 @@ int main(int argc, char* argv[]) {
   dir_itr = nullptr;
   closedir(directory_ptr);
   /* Read In From File */
-  //double* number_array = ReadFromFile(kUnsortedInputFile);
   double *number_array = nullptr;
   const size_t array_length = ReadFromFile(kUnsortedInputFile, &number_array);
   for (size_t i = 0; i < array_length; i++)
     cout << number_array[i] << endl;
   /* Sorting */
   /* Write To File */
-  return 0;           
+  return 0;
 }  // End of Main.
 
 const size_t ReadFromFile(const string file_name, double** array) {
@@ -87,7 +86,7 @@ const size_t ReadFromFile(const string file_name, double** array) {
     cout << "gazdecki_adam_QuickSort: ReadfromFile function error!"
          << endl << endl;
     cout << "File exists, but file stream opened incorrectly." << endl
-         << "Is the file encrypted or corrupted somehow?" << endl << endl; 
+         << "Is the file encrypted or corrupted somehow?" << endl << endl;
     cout << "Program's behavior is undefined beyond this point." << endl
          << "Have a nice day!" << endl << endl;
     return -1;  // File exists but opened incorrectly. How?
@@ -116,7 +115,7 @@ const size_t ReadFromFile(const string file_name, double** array) {
   return quantity_of_numbers;
 }
 
-void QuickSort(size_t left_itr, size_t right_itr, double& array) {
+void QuickSort(size_t left_itr, size_t right_itr, double** array) {
   //
 }
 
