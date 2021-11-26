@@ -70,7 +70,22 @@ int main(int argc, char* argv[]) {
   }
   dir_itr = nullptr;
   closedir(directory_ptr);
-  /* Sorting? */
-  return 0;
+  /* Read In From File */
+  /* Sorting */
+  /* Write To File */
+  return 0;           
+}  // End of Main.
+
+double* ReadFromFile(const string file_name) {
+  return nullptr;
 }
+
+void QuickSort(size_t left_itr, size_t right_itr, double& array) {
+  //
+}
+
+void WriteToFile(const string file_name) {
+  //
+}
+
 // ~End of File.
