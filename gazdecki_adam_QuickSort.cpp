@@ -71,13 +71,41 @@ int main(int argc, char* argv[]) {
   dir_itr = nullptr;
   closedir(directory_ptr);
   /* Read In From File */
+  //double* number_array = ReadFromFile(kUnsortedInputFile);
+  double *number_array = nullptr;
+  ReadFromFile(kUnsortedInputFile, &number_array);
+  for (size_t i = 0; i < 4; i++)
+    cout << number_array[i] << endl;
   /* Sorting */
   /* Write To File */
   return 0;           
 }  // End of Main.
 
-double* ReadFromFile(const string file_name) {
-  return nullptr;
+void ReadFromFile(const string file_name, double** array) {
+  // Thank you a_m0d for asking 1398307. I finally understand everything.
+  std::ifstream input_stream(file_name);
+  if (!input_stream) {
+    cout << "gazdecki_adam_QuickSort: ReadfromFile function error!"
+         << endl << endl;
+    cout << "File stream opened incorrectly." << endl
+         << "Is the file encrypted or corrupted somehow?" << endl << endl; 
+    cout << "Program's behavior is undefined beyond this point." << endl
+         << "Have a nice day!" << endl << endl;
+    return;  // File exists but opened incorrectly. How?
+  }
+  // Find how many numbers are here so we can allocate memory.
+  size_t quantity_of_numbers = 0;
+  std::istream_iterator<double> start(input_stream), end;
+  quantity_of_numbers = std::distance(start, end);
+  *array = new double[quantity_of_numbers];
+  cout << quantity_of_numbers << endl;
+  // Fun fact about pointers-to-pointers. The abreviated square bracket syntax
+  // begins to break-down and has undefined behavior. Example:
+  // *array[i] is... not nice.
+  double* array_end = *array + quantity_of_numbers;
+  for (double* itr = *array; itr < array_end; itr++) {
+    *itr = 0.8;
+  }
 }
 
 void QuickSort(size_t left_itr, size_t right_itr, double& array) {
