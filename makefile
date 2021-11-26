@@ -7,7 +7,7 @@ COMPILER_ARGS += -I .
 
 LINK = $(BASE_COMPILER) $(COMPILER_ARGS) -o
 COMPILE = $(BASE_COMPILER) $(COMPILER_ARGS) -c
-LINT = ~/Downloads/cpplint-master/cpplint.py --root=./
+LINT = @~/Downloads/cpplint-master/cpplint.py --root=./
 
 ## QuickSort ##
 # Our QuickSort Project interacts with input file generator through arguments.
@@ -21,6 +21,7 @@ gazdecki_adam_QuickSort.o: gazdecki_adam_QuickSort.cpp \
 lint-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.cpp \
                               gazdecki_adam_QuickSort.h
 	$(LINT) $^
+	@echo "QuickSort linting good.\n"
 
 ## Input file generator ##
 # TODO "used to generate input ASCII files (Do NOT include in makefile)"
@@ -34,6 +35,7 @@ InputFileGenerator.o: InputFileGenerator.cpp \
 lint-InputFileGenerator: InputFileGenerator.cpp \
                          InputFileGenerator.h 
 	$(LINT) $^
+	@echo "InputFileGenerator linting good.\n"
 
 ## Utility Commands ##
 # TODO(me) I'm having trouble ordering these logically?
@@ -48,4 +50,4 @@ clean-generated-files:
 	@rm .generated_*
 
 lint-all: lint-gazdecki_adam_QuickSort lint-InputFileGenerator
-	echo "All linting successful!"
+	@echo "All linting successful!"
