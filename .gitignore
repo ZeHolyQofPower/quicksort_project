@@ -12,3 +12,4 @@
 # Ignore Testing Files.
 **/input.txt
 **/output.txt
+**/.written_*
