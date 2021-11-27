@@ -73,9 +73,12 @@ int main(int argc, char* argv[]) {
   /* Read In From File */
   double *number_array = nullptr;
   const size_t array_length = ReadFromFile(kUnsortedInputFile, &number_array);
+  /*
   for (size_t i = 0; i < array_length; i++)
     cout << number_array[i] << endl;
+  */
   /* Sorting */
+  QuickSort(0, array_length-1, array_length, &number_array);
   /* Write To File */
   return 0;
 }  // End of Main.
@@ -115,8 +118,58 @@ const size_t ReadFromFile(const string file_name, double** array) {
   return quantity_of_numbers;
 }
 
-void QuickSort(size_t left_itr, size_t right_itr, double** array) {
-  //
+void QuickSort(size_t left_ind, size_t right_ind, size_t array_length, 
+               double** array) {
+  cout << "Array values:" << endl;
+  double* array_end = *array + array_length;
+  for (double* itr = *array; itr < array_end; itr++) {
+    cout << *itr << endl;
+  }
+  cout << endl;
+  // Recursive halting condition first:
+  // If your indexes cross or have only one element.
+  if (array_length <= 1 || left_ind >= right_ind || *array == nullptr)
+    return;
+  // Partition array using median-of-three pivot.
+  // Important note: Part of this optamization is that the selected values are
+  // sorted to their psudo-correct positions before continuing.
+  // This effects the next recursive call and removes a particular worst case:
+  // Sorted with, first and last index swapped.
+  double leftmost = *(*array + 0);
+  double middle = *(*array + array_length/2);
+  double rightmost = *(*array + array_length - 1);
+
+  cout << "leftmost: " << leftmost << endl;
+  cout << "middle: " << middle << endl;
+  cout << "rightmost: " << rightmost << endl;
+
+  size_t pivot_index;
+  double pivot_value;
+  double tmp;
+  if ((leftmost > middle) ^ (leftmost > rightmost)) {
+    // Leftmost is the median.
+    pivot_index = 0;
+    pivot_value = leftmost;
+    // Sort.
+    
+  } else if ((middle < leftmost) ^ (middle < rightmost)) {
+    // Rightmost is the median.
+    pivot_index = array_length - 1;
+    pivot_value = rightmost;
+    // Sort.
+
+  } else {
+    // Middle is the median
+    pivot_index = array_length/2;
+    pivot_value = middle;
+    // Sort.
+    if (leftmost > rightmost) {
+      tmp = rightmost;
+      rightmost = leftmost;
+      leftmost = tmp;
+    }  // else do nothing.
+  }
+  // Every item is looped through and placed on the correct side of the pivot.
 }
 
 void WriteToFile(const string file_name) {

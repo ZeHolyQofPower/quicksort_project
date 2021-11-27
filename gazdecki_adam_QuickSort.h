@@ -29,7 +29,8 @@ const size_t ReadFromFile(const string file_name, double** array);
  * 
  * Precondition: None?
  */
-void QuickSort(size_t left_itr, size_t right_itr, double** array);
+void QuickSort(size_t left_ind, size_t right_ind, size_t array_length, 
+               double** array);
 
 /* This function takes the values in an array, and writes them to a new file.
  * 
