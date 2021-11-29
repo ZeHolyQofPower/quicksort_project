@@ -115,14 +115,16 @@ const size_t ReadFromFile(const string file_name, double** array) {
   input_stream.close();
   // Don't forget to return the length of your new array!
   return quantity_of_numbers;
-}
+}  // End of ReadFromFile
 
 void QuickSort(double* leftmost_index, double* rightmost_index,
                size_t array_length, double** array) {
+  /*
   cout << "Quicksort Call!" << endl;
-//  cout << "lefty: " << *leftmost_index << " and my righty: "
-//       << *rightmost_index << " and my length: " << array_length << endl;
+  cout << "lefty: " << *leftmost_index << " and my righty: "
+       << *rightmost_index << " and my length: " << array_length << endl;
   PrintArray(&leftmost_index, array_length);
+  */
   /* Recursive halting condition first: */
   // If your indexes cross or have only two elements.
   if (array_length <= 2 || leftmost_index >= rightmost_index
@@ -143,8 +145,6 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
   double* pivot_index [[maybe_unused]]= &not_nullptr;  // [[Supress warning]]
   double* tmp_ptr = &not_nullptr;
   // The second layer of this structure places the median in the middle.
-//  cout << "Choosing pivot out of (" << leftmost << ", " << middle << ", "
-//       << rightmost << ")" << endl;
   if ((leftmost > middle) ^ (leftmost > rightmost)) {
     // Leftmost is the median.
     *pivot_index = leftmost;
@@ -168,77 +168,53 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
     *leftmost_index = *rightmost_index;
     *rightmost_index = *tmp_ptr;
   }
+  /*
   cout << "pivot is: " << *pivot_index << "! at middle index: "
        << (pivot_index - *array) << " now." << endl;
-//  cout << "Here are our three choices arranged in order: " << endl;
+  cout << "Here are our three choices arranged in order: " << endl;
   PrintArray(array, array_length);
+  */
   // Every item is looped through and placed on the correct side of the pivot.
   double* i = leftmost_index;
   double* j = rightmost_index;
   while (i <= j) {
     // Loop through are check all the left elements.
-    while (*i < *pivot_index/* && i < pivot_index*/) {
-      if (i > pivot_index) {
-//        cout << "oh no. i is on the wrong side. Guess I'll freeze." << endl;
-      }
+    while (*i < *pivot_index)
       i++;
-    }
-//    cout << "Found: " << *i << " that's more than or equal to the pivot on wrong side." << endl;
     // Loop through and check all the right elements.
-    while (*j > *pivot_index/* && j > pivot_index*/) {
-      if (j < pivot_index) {
-//        cout << "oh no. j is on the wrong side. Guess I'll freeze." << endl;
-      }
+    while (*j > *pivot_index)
       j--;
-    }
-//    cout << "Found: " << *j << " that's less than or equal to the pivot on wrong side." << endl;
-    // Make sure if someone crossed the pivot, they move it.
-    //if ()
     // Now Swap elements to correct sides of pivot.
     if (i <= j) {
-//        cout << "Swap i and j to opposite sides and keep going" << endl;
         *tmp_ptr = *i;
         *i = *j;
         *j = *tmp_ptr;
         // If the pivot is moved, do not allow i or j to get on the wrong side.
         if (i == pivot_index) {
-//          cout << "PIVOT MOVED to j AHHHHHHH" << endl;
           pivot_index = j;
-          j++;  // Uniterate so it sticks to the pivot
-//          cout << "uh... j: " << (j - *array) << endl;
-//          cout << "new pivot location: " << (pivot_index - *array) << endl;
+          j++;  // Uniterate so it sticks to the pivot.
         } else if (j == pivot_index) {
-//          cout << "PIVOT MOVED to i AHHHHHHH" << endl;
           pivot_index = i;
-          i--;
-//          cout << "new pivot location: " << (pivot_index - *array) << endl;
+          i--;  // Again, unitterate the next step.
         }
         i++;
         j--;
-//        PrintArray(&leftmost_index, array_length);
-//        cout << "===i is at " << *i << " and j is at " << *j << "===" << endl;
     }
   }
-cout << "Arranged values around pivot:" << endl;
-PrintArray(&leftmost_index, array_length);
+  /*
+  cout << "Arranged values around pivot:" << endl;
+  PrintArray(&leftmost_index, array_length);
+  */
   // Now recursively partition until all divided arrays are sorted.
-/*
-  cout << "leftmost_index: " << *leftmost_index << endl;
-  cout << "rightmost_index: " << *rightmost_index << endl;
-  cout << "i: " << *i << endl;
-  cout << "j: " << *j << endl;
-*/
-  if (leftmost_index < j) {  // Partition Left Side.
+  if (leftmost_index < j)  // Partition Left Side.
     QuickSort(leftmost_index, j, (j - leftmost_index + 1), array);
-  }
-  if (rightmost_index > i) {  // Partition right Side.
+  if (rightmost_index > i)  // Partition right Side.
     QuickSort(i, rightmost_index, (rightmost_index - i + 1), array);
-  }
 }  // End of QuickSort.
 
 void WriteToFile(const string file_name) {
   //
-}
+}  // End of Write to File.
 
 void PrintArray(double** array_start_index, size_t length) {
   size_t count = 0;
@@ -250,6 +226,6 @@ void PrintArray(double** array_start_index, size_t length) {
       cout << endl;
   }
   cout << endl;
-}
+}  // End of PrintArray
 
 // ~End of File.
