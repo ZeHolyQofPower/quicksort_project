@@ -45,9 +45,13 @@ clean:
 	@rm InputFileGenerator
 	@rm gazdecki_adam_QuickSort
 	@rm .generated_*
+	@rm .sorted_*
 
 clean-generated-files:
 	@rm .generated_*
+
+clean-sorted-files:
+	@rm .sorted_*
 
 lint-all: lint-gazdecki_adam_QuickSort lint-InputFileGenerator
 	@echo "All linting successful!"
