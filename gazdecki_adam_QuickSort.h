@@ -12,6 +12,7 @@ using std::endl;
 using std::string;
 #include <fstream>  // Used for writing to files.
 #include <iterator>  // Used for counting elements in files.
+#include <chrono>  // Used for timing QuickSort function.
 
 /* This function takes the values in a file, and writes them to a dynamically
  * allocated array. array is an output parameter.
@@ -36,7 +37,7 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
  * 
  * Precondition: The file must NOT already exist.
  */
-void WriteToFile(const string file_name, double** array, 
+void WriteToFile(const string file_name, double** array,
                  const size_t length);
 
 /* This function prints the values of the array to console for debugging.

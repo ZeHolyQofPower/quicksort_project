@@ -75,9 +75,14 @@ int main(int argc, char* argv[]) {
   /* Read In From File */
   double *number_array = nullptr;
   const size_t array_length = ReadFromFile(kUnsortedInputFile, &number_array);
-  /* Sorting */
+  /* Sorting and Timing */
+  auto start = std::chrono::steady_clock::now();
   QuickSort(number_array, (number_array + array_length - 1), array_length,
             &number_array);
+  auto end = std::chrono::steady_clock::now();
+  cout << "Time taken to sort file " << kUnsortedInputFile << " ";
+  cout << std::chrono::duration <double, std::milli> (end - start).count();
+  cout << " ms" << endl;
   /*
   cout << "Array Values After Quicksort Call:" << endl;
   PrintArray(&number_array, array_length);
@@ -147,7 +152,8 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
   double rightmost = *rightmost_index;
 
   double not_nullptr = -1.0;  // Random NON-nullptr value for initalization.
-  double* pivot_index [[maybe_unused]]= &not_nullptr;  // [[Supress warning]]
+  double* pivot_index[[maybe_unused]] = &not_nullptr;
+  // The double brackets here supresses g++'s silly warning.
   double* tmp_ptr = &not_nullptr;
   // The second layer of this structure places the median in the middle.
   if ((leftmost > middle) ^ (leftmost > rightmost)) {
@@ -217,7 +223,7 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
     QuickSort(i, rightmost_index, (rightmost_index - i + 1), array);
 }  // End of QuickSort.
 
-void WriteToFile(const string file_name, double** array_start_index, 
+void WriteToFile(const string file_name, double** array_start_index,
                  const size_t length) {
   // TODO(gazdecki) Is this supposed to have no newlines and end on space?
   const string kDelimiter = " ";
