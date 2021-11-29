@@ -40,7 +40,7 @@ lint-InputFileGenerator: InputFileGenerator.cpp \
 ## Utility Commands ##
 # TODO(me) I'm having trouble ordering these logically?
 # How can I handle larger projects using this kind of clean cmd?
-clean:
+clean:# one-of-everything
 	@rm ./*.o
 	@rm InputFileGenerator
 	@rm gazdecki_adam_QuickSort
@@ -55,3 +55,9 @@ clean-sorted-files:
 
 lint-all: lint-gazdecki_adam_QuickSort lint-InputFileGenerator
 	@echo "All linting successful!"
+
+# This functions runs through to make one of every type of file clean wants.
+one-of-everything: InputFileGenerator gazdecki_adam_QuickSort
+	@./InputFileGenerator silly_file_name.txt 1
+	@./gazdecki_adam_QuickSort .generated_silly_file_name.txt silly_file_name.txt
+
