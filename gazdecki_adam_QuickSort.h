@@ -29,14 +29,20 @@ const size_t ReadFromFile(const string file_name, double** array);
  * 
  * Precondition: None?
  */
-void QuickSort(size_t left_ind, size_t right_ind, size_t array_length, 
-               double** array);
+void QuickSort(double* leftmost_index, double* rightmost_index,
+               size_t array_length, double** array);
 
 /* This function takes the values in an array, and writes them to a new file.
  * 
  * Precondition: The file must NOT already exist.
  */
 void WriteToFile(const string file_name);
+
+/* This function prints the values of the array to console for debugging.
+ * 
+ * Precondition: There should be a bug that needs calling.
+ */
+void PrintArray(double** array_start_index, size_t length);
 
 #endif  // GAZDECKI_ADAM_QUICKSORT_H_
 // ~End of File.

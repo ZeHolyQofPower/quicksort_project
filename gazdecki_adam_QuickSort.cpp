@@ -73,25 +73,11 @@ int main(int argc, char* argv[]) {
   /* Read In From File */
   double *number_array = nullptr;
   const size_t array_length = ReadFromFile(kUnsortedInputFile, &number_array);
-  /*
-  for (size_t i = 0; i < array_length; i++)
-    cout << number_array[i] << endl;
-  */
   /* Sorting */
-  cout << "Array Values Before Quicksort Call:" << endl;
-  double* array_end = number_array + array_length;
-  for (double* itr = number_array; itr < array_end; itr++) {
-    cout << *itr << endl;
-  }
-  cout << endl;
-
-  QuickSort(0, array_length-1, array_length, &number_array);
-
+  QuickSort(number_array, (number_array + array_length - 1), array_length,
+            &number_array);
   cout << "Array Values After Quicksort Call:" << endl;
-  for (double* itr = number_array; itr < array_end; itr++) {
-    cout << *itr << endl;
-  }
-  cout << endl;
+  PrintArray(&number_array, array_length);
   /* Write To File */
   return 0;
 }  // End of Main.
@@ -131,69 +117,139 @@ const size_t ReadFromFile(const string file_name, double** array) {
   return quantity_of_numbers;
 }
 
-void QuickSort(size_t left_ind, size_t right_ind, size_t array_length, 
-               double** array) {
-  /*
-  cout << "Array values After:" << endl;
-  array_end = *array + array_length;
-  for (double* itr = *array; itr < array_end; itr++) {
-    cout << *itr << endl;
-  }
-  cout << endl;
-  */
+void QuickSort(double* leftmost_index, double* rightmost_index,
+               size_t array_length, double** array) {
+  cout << "Quicksort Call!" << endl;
+//  cout << "lefty: " << *leftmost_index << " and my righty: "
+//       << *rightmost_index << " and my length: " << array_length << endl;
+  PrintArray(&leftmost_index, array_length);
   /* Recursive halting condition first: */
-  // If your indexes cross or have only one element.
-  if (array_length <= 1 || left_ind >= right_ind || *array == nullptr)
+  // If your indexes cross or have only two elements.
+  if (array_length <= 2 || leftmost_index >= rightmost_index
+      || *array == nullptr)
     return;
   /* Partition array using median-of-three pivot. */
-  // Important note: Part of this optimization is that the selected values are
+  // Important note: Part of this optimization is that the three values are
   // sorted to their psudo-correct positions before continuing.
   // This effects the next recursive call and removes a particular worst case:
   // Sorted input, but first and last indexes are swapped.
-  // These pointers are required to correctly swap values around the array.
-  double* leftmost_index = *array + 0;
-  double* middle_index = *array + array_length/2;
-  double* rightmost_index = *array + array_length - 1;
+  double* middle_index = (leftmost_index + array_length/2);
   // These simple labels make life a lot easier.
   double leftmost = *leftmost_index;
   double middle = *middle_index;
   double rightmost = *rightmost_index;
 
   double not_nullptr = -1.0;  // Random NON-nullptr value for initalization.
-  double* pivot_index = &not_nullptr;
-  double pivot_value;
+  double* pivot_index [[maybe_unused]]= &not_nullptr;  // [[Supress warning]]
   double* tmp_ptr = &not_nullptr;
   // The second layer of this structure places the median in the middle.
+//  cout << "Choosing pivot out of (" << leftmost << ", " << middle << ", "
+//       << rightmost << ")" << endl;
   if ((leftmost > middle) ^ (leftmost > rightmost)) {
     // Leftmost is the median.
-    pivot_index = leftmost_index;
-    pivot_value = leftmost;
+    *pivot_index = leftmost;
     *tmp_ptr = *middle_index;
     *middle_index = *leftmost_index;
     *leftmost_index = *tmp_ptr;
   } else if ((middle < leftmost) ^ (middle < rightmost)) {
     // Middle is the median
-    pivot_index = middle_index;
-    pivot_value = middle;
+    *pivot_index = middle;
   } else {
     // Rightmost is the median.
-    pivot_index = rightmost_index;
-    pivot_value = rightmost;
+    *pivot_index = rightmost;
     *tmp_ptr = *middle_index;
     *middle_index = *rightmost_index;
     *rightmost_index = *tmp_ptr;
   }
-  // Now with the median in the middle, order the outer values.
+  // Median in the middle now, label index nicely, order the outer values.
+  pivot_index = middle_index;
   if (leftmost > rightmost) {
     *tmp_ptr = *leftmost_index;
     *leftmost_index = *rightmost_index;
     *rightmost_index = *tmp_ptr;
   }
+  cout << "pivot is: " << *pivot_index << "! at middle index: "
+       << (pivot_index - *array) << " now." << endl;
+//  cout << "Here are our three choices arranged in order: " << endl;
+  PrintArray(array, array_length);
   // Every item is looped through and placed on the correct side of the pivot.
-}
+  double* i = leftmost_index;
+  double* j = rightmost_index;
+  while (i <= j) {
+    // Loop through are check all the left elements.
+    while (*i < *pivot_index/* && i < pivot_index*/) {
+      if (i > pivot_index) {
+//        cout << "oh no. i is on the wrong side. Guess I'll freeze." << endl;
+      }
+      i++;
+    }
+//    cout << "Found: " << *i << " that's more than or equal to the pivot on wrong side." << endl;
+    // Loop through and check all the right elements.
+    while (*j > *pivot_index/* && j > pivot_index*/) {
+      if (j < pivot_index) {
+//        cout << "oh no. j is on the wrong side. Guess I'll freeze." << endl;
+      }
+      j--;
+    }
+//    cout << "Found: " << *j << " that's less than or equal to the pivot on wrong side." << endl;
+    // Make sure if someone crossed the pivot, they move it.
+    //if ()
+    // Now Swap elements to correct sides of pivot.
+    if (i <= j) {
+//        cout << "Swap i and j to opposite sides and keep going" << endl;
+        *tmp_ptr = *i;
+        *i = *j;
+        *j = *tmp_ptr;
+        // If the pivot is moved, do not allow i or j to get on the wrong side.
+        if (i == pivot_index) {
+//          cout << "PIVOT MOVED to j AHHHHHHH" << endl;
+          pivot_index = j;
+          j++;  // Uniterate so it sticks to the pivot
+//          cout << "uh... j: " << (j - *array) << endl;
+//          cout << "new pivot location: " << (pivot_index - *array) << endl;
+        } else if (j == pivot_index) {
+//          cout << "PIVOT MOVED to i AHHHHHHH" << endl;
+          pivot_index = i;
+          i--;
+//          cout << "new pivot location: " << (pivot_index - *array) << endl;
+        }
+        i++;
+        j--;
+//        PrintArray(&leftmost_index, array_length);
+//        cout << "===i is at " << *i << " and j is at " << *j << "===" << endl;
+    }
+  }
+cout << "Arranged values around pivot:" << endl;
+PrintArray(&leftmost_index, array_length);
+  // Now recursively partition until all divided arrays are sorted.
+/*
+  cout << "leftmost_index: " << *leftmost_index << endl;
+  cout << "rightmost_index: " << *rightmost_index << endl;
+  cout << "i: " << *i << endl;
+  cout << "j: " << *j << endl;
+*/
+  if (leftmost_index < j) {  // Partition Left Side.
+    QuickSort(leftmost_index, j, (j - leftmost_index + 1), array);
+  }
+  if (rightmost_index > i) {  // Partition right Side.
+    QuickSort(i, rightmost_index, (rightmost_index - i + 1), array);
+  }
+}  // End of QuickSort.
 
 void WriteToFile(const string file_name) {
   //
+}
+
+void PrintArray(double** array_start_index, size_t length) {
+  size_t count = 0;
+  double* array_end = *array_start_index + length;
+  for (double* itr = *array_start_index; itr < array_end; itr++) {
+    count++;
+    cout << *itr << "  " << "\t";
+    if (count % 5 == 0)
+      cout << endl;
+  }
+  cout << endl;
 }
 
 // ~End of File.
