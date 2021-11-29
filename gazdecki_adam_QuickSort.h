@@ -36,7 +36,8 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
  * 
  * Precondition: The file must NOT already exist.
  */
-void WriteToFile(const string file_name);
+void WriteToFile(const string file_name, double** array, 
+                 const size_t length);
 
 /* This function prints the values of the array to console for debugging.
  * 

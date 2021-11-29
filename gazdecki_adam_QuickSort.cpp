@@ -15,6 +15,8 @@
 int main(int argc, char* argv[]) {
   /* Tweakable Constants */
   const char* kSearchDirectoryPtr = ".";
+  const string kFilePrefix = ".sorted_";  // This allows reasonable cleanup.
+  // TODO(gazdecki) Remove the usage of this prefix from final version.
   /* Check Command-Line Usage */
   if (argc != 3) {
     // Usage information:
@@ -39,7 +41,7 @@ int main(int argc, char* argv[]) {
   // Check if output file already exists. If so, abort.
   struct dirent* dir_itr;
   while ((dir_itr = readdir(directory_ptr)) != NULL) {
-    if (kSortedOutputFile == (dir_itr->d_name)) {
+    if ((kFilePrefix + kSortedOutputFile) == (dir_itr->d_name)) {
     cout << "gazdecki_adam_QuickSort: Output file already exists error"
          << endl << endl;
     cout << "Entered file name already found. No action will be taken."
@@ -76,9 +78,12 @@ int main(int argc, char* argv[]) {
   /* Sorting */
   QuickSort(number_array, (number_array + array_length - 1), array_length,
             &number_array);
+  /*
   cout << "Array Values After Quicksort Call:" << endl;
   PrintArray(&number_array, array_length);
+  */
   /* Write To File */
+  WriteToFile(kFilePrefix + kSortedOutputFile, &number_array, array_length);
   return 0;
 }  // End of Main.
 
@@ -212,9 +217,28 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
     QuickSort(i, rightmost_index, (rightmost_index - i + 1), array);
 }  // End of QuickSort.
 
-void WriteToFile(const string file_name) {
-  //
-}  // End of Write to File.
+void WriteToFile(const string file_name, double** array_start_index, 
+                 const size_t length) {
+  // TODO(gazdecki) Is this supposed to have no newlines and end on space?
+  const string kDelimiter = " ";
+  std::ofstream output_stream;
+  output_stream.open(file_name);
+  if (!output_stream) {
+    cout << "gazdecki_adam_QuickSort: WriteToFile function error!"
+         << endl << endl;
+    cout << "File doesn't exist yet, but file stream opened incorrectly."
+         << endl << endl;
+    cout << "Program's behavior is undefined beyond this point." << endl
+         << "Have a nice day!" << endl << endl;
+    return;  // File stream opened incorrectly?
+  }
+  // Now the actual writting.
+  double* array_end = *array_start_index + length;
+  for (double* itr = *array_start_index; itr < array_end; itr++) {
+    output_stream << *itr << kDelimiter;
+  }
+  output_stream.close();
+}  // End of WriteToFile.
 
 void PrintArray(double** array_start_index, size_t length) {
   size_t count = 0;
