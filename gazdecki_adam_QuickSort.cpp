@@ -89,6 +89,7 @@ int main(int argc, char* argv[]) {
   */
   /* Write To File */
   WriteToFile(kFilePrefix + kSortedOutputFile, &number_array, array_length);
+  delete [] number_array;
   return 0;
 }  // End of Main.
 
