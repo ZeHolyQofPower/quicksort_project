@@ -1,7 +1,7 @@
 ## Welcome to Adam Gazdecki's CSCE350 Project.
 A Median-of-Three Implementation and Empirical Analysis of the QuickSort Algorithm.
 # Directions for Compilation and Use.
-### Download The Repository.
+### 1. Download The Repository.
 You should be able to download the compressed package from dropbox.
 
 Unfortunatly my github repository is private so you won't be able to clone it yourself directly. I am willing to share the repository or download with other professors if you email me at gazdecki@email.sc.edu . I am not willing to share this with any students at any point though.
@@ -28,7 +28,7 @@ For deletion of all files starting with `.generated_*` run the command:
 `make clean-generated-files`
 
 gazdecki_adam_QuickSort interacts with the command line for file input and output.
-The execution of the QuickSort function is diectly appended to the end of the file `executionTime.txt`.
+The execution of the QuickSort function is directly appended to the end of the file `executionTime.txt`.
 `./gazdecki_adam_QuickSort input.txt output.txt` will create the file `.sorted_output.txt`
 
 For deletion of all files starting with `.sorted_*` run the command:

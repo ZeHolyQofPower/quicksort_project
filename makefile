@@ -11,6 +11,9 @@ LINK = $(BASE_COMPILER) $(COMPILER_ARGS) -o
 COMPILE = $(BASE_COMPILER) $(COMPILER_ARGS) -c
 LINT = @~/Downloads/cpplint-master/cpplint.py --root=./
 
+## Build ##
+build: InputFileGenerator gazdecki_adam_QuickSort
+
 ## QuickSort ##
 # Our QuickSort Project interacts with input file generator through arguments.
 gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.o
