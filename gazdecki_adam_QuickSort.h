@@ -23,28 +23,28 @@ using std::string;
  * 
  * Preconditions: Delimiter is a space. Input file exists.
  */
-const size_t ReadFromFile(const string file_name, double** array);
+size_t ReadFromFile(const string file_name, float** array);
 
 /* This function quicksorts the values in an array.
  * It uses a median-of-three pivot.
  * 
  * Precondition: None?
  */
-void QuickSort(double* leftmost_index, double* rightmost_index,
-               size_t array_length, double** array);
+void QuickSort(float* leftmost_index, float* rightmost_index,
+               size_t array_length, float** array);
 
 /* This function takes the values in an array, and writes them to a new file.
  * 
  * Precondition: The file must NOT already exist.
  */
-void WriteToFile(const string file_name, double** array,
+void WriteToFile(const string file_name, float** array,
                  const size_t length);
 
 /* This function prints the values of the array to console for debugging.
  * 
  * Precondition: There should be a bug that needs calling.
  */
-void PrintArray(double** array_start_index, size_t length);
+void PrintArray(float** array_start_index, size_t length);
 
 #endif  // GAZDECKI_ADAM_QUICKSORT_H_
 // ~End of File.

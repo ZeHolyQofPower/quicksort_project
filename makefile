@@ -3,6 +3,8 @@
 BASE_COMPILER = g++
 COMPILER_ARGS = -std=c++11
 COMPILER_ARGS += -Wall
+COMPILER_ARGS += -Wextra
+# COMPILER_ARGS += -fsplit-stack
 COMPILER_ARGS += -I .
 
 LINK = $(BASE_COMPILER) $(COMPILER_ARGS) -o

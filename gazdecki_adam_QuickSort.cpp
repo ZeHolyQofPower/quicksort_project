@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
   dir_itr = nullptr;
   closedir(directory_ptr);
   /* Read In From File */
-  double *number_array = nullptr;
+  float *number_array = nullptr;
   const size_t array_length = ReadFromFile(kUnsortedInputFile, &number_array);
   /* Sorting and Timing */
   auto start = std::chrono::steady_clock::now();
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
   return 0;
 }  // End of Main.
 
-const size_t ReadFromFile(const string file_name, double** array) {
+size_t ReadFromFile(const string file_name, float** array) {
   std::ifstream input_stream(file_name);
   if (!input_stream) {
     cout << "gazdecki_adam_QuickSort: ReadfromFile function error!"
@@ -110,7 +110,7 @@ const size_t ReadFromFile(const string file_name, double** array) {
   std::istream_iterator<double> start(input_stream), end;
   quantity_of_numbers = std::distance(start, end);
   // Allocate memory and take data into array.
-  *array = new double[quantity_of_numbers];
+  *array = new float[quantity_of_numbers];
   // Move input file stream back to beginning of file.
   input_stream.clear();
   input_stream.seekg(0);
@@ -118,8 +118,8 @@ const size_t ReadFromFile(const string file_name, double** array) {
   // begins to break-down and has undefined behavior. Example:
   // *array[i] is... not nice.
   string tmp = "";
-  double* array_end = *array + quantity_of_numbers;
-  for (double* itr = *array; itr < array_end; itr++) {
+  float* array_end = *array + quantity_of_numbers;
+  for (float* itr = *array; itr < array_end; itr++) {
     input_stream >> tmp;
     *itr = stof(tmp);
   }
@@ -128,34 +128,35 @@ const size_t ReadFromFile(const string file_name, double** array) {
   return quantity_of_numbers;
 }  // End of ReadFromFile
 
-void QuickSort(double* leftmost_index, double* rightmost_index,
-               size_t array_length, double** array) {
+void QuickSort(float* leftmost_index, float* rightmost_index,
+               size_t array_length, float** array) {
   /*
   cout << "Quicksort Call!" << endl;
   cout << "lefty: " << *leftmost_index << " and my righty: "
        << *rightmost_index << " and my length: " << array_length << endl;
   PrintArray(&leftmost_index, array_length);
   */
-  /* Recursive halting condition first: */
+  /* Recursive Halting Condition First */
   // If your indexes cross or have only two elements.
   if (array_length <= 2 || leftmost_index >= rightmost_index
-      || *array == nullptr)
+      || *array == nullptr) {
     return;
-  /* Partition array using median-of-three pivot. */
+  }
+  /* Selection Median-Of-Three Pivot. */
   // Important note: Part of this optimization is that the three values are
   // sorted to their psudo-correct positions before continuing.
   // This effects the next recursive call and removes a particular worst case:
   // Sorted input, but first and last indexes are swapped.
-  double* middle_index = (leftmost_index + array_length/2);
+  float* middle_index = (leftmost_index + array_length/2);
   // These simple labels make life a lot easier.
-  double leftmost = *leftmost_index;
-  double middle = *middle_index;
-  double rightmost = *rightmost_index;
+  float leftmost = *leftmost_index;
+  float middle = *middle_index;
+  float rightmost = *rightmost_index;
 
-  double not_nullptr = -1.0;  // Random NON-nullptr value for initalization.
-  double* pivot_index[[maybe_unused]] = &not_nullptr;
+  float not_nullptr = -1.0;  // Random NON-nullptr value for initalization.
+  float* pivot_index[[maybe_unused]] = &not_nullptr;
   // The double brackets here supresses g++'s silly warning.
-  double* tmp_ptr = &not_nullptr;
+  float* tmp_ptr = &not_nullptr;
   // The second layer of this structure places the median in the middle.
   if ((leftmost > middle) ^ (leftmost > rightmost)) {
     // Leftmost is the median.
@@ -186,9 +187,9 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
   cout << "Here are our three choices arranged in order: " << endl;
   PrintArray(array, array_length);
   */
-  // Every item is looped through and placed on the correct side of the pivot.
-  double* i = leftmost_index;
-  double* j = rightmost_index;
+  /* Partition And Arrange Values */
+  float* i = leftmost_index;
+  float* j = rightmost_index;
   while (i <= j) {
     // Loop through are check all the left elements.
     while (*i < *pivot_index)
@@ -218,13 +219,14 @@ void QuickSort(double* leftmost_index, double* rightmost_index,
   PrintArray(&leftmost_index, array_length);
   */
   // Now recursively partition until all divided arrays are sorted.
+  /* Recursive Call To Each Smaller Part */
   if (leftmost_index < j)  // Partition Left Side.
     QuickSort(leftmost_index, j, (j - leftmost_index + 1), array);
   if (rightmost_index > i)  // Partition right Side.
     QuickSort(i, rightmost_index, (rightmost_index - i + 1), array);
 }  // End of QuickSort.
 
-void WriteToFile(const string file_name, double** array_start_index,
+void WriteToFile(const string file_name, float** array_start_index,
                  const size_t length) {
   // TODO(gazdecki) Is this supposed to have no newlines and end on space?
   const string kDelimiter = " ";
@@ -240,17 +242,17 @@ void WriteToFile(const string file_name, double** array_start_index,
     return;  // File stream opened incorrectly?
   }
   // Now the actual writting.
-  double* array_end = *array_start_index + length;
-  for (double* itr = *array_start_index; itr < array_end; itr++) {
+  float* array_end = *array_start_index + length;
+  for (float* itr = *array_start_index; itr < array_end; itr++) {
     output_stream << *itr << kDelimiter;
   }
   output_stream.close();
 }  // End of WriteToFile.
 
-void PrintArray(double** array_start_index, size_t length) {
+void PrintArray(float** array_start_index, size_t length) {
   size_t count = 0;
-  double* array_end = *array_start_index + length;
-  for (double* itr = *array_start_index; itr < array_end; itr++) {
+  float* array_end = *array_start_index + length;
+  for (float* itr = *array_start_index; itr < array_end; itr++) {
     count++;
     cout << *itr << "  " << "\t";
     if (count % 5 == 0)
