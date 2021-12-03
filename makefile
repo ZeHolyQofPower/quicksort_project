@@ -1,10 +1,9 @@
-# TODO This makefile needs to contain directions to compile and use this
-# project. I should probably make them an exact duplicate of the README.md
+# Hey! Check out README.md for detailed command instructions.
 BASE_COMPILER = g++
 COMPILER_ARGS = -std=c++11
 COMPILER_ARGS += -Wall
 COMPILER_ARGS += -Wextra
-# COMPILER_ARGS += -fsplit-stack
+# COMPILER_ARGS += -fsplit-stack # Dynamically add more stack memory as needed.
 COMPILER_ARGS += -I .
 
 LINK = $(BASE_COMPILER) $(COMPILER_ARGS) -o
@@ -30,7 +29,6 @@ lint-gazdecki_adam_QuickSort: gazdecki_adam_QuickSort.cpp \
 	@echo "QuickSort linting good.\n"
 
 ## Input file generator ##
-# TODO "used to generate input ASCII files (Do NOT include in makefile)"
 InputFileGenerator: InputFileGenerator.o
 	$(LINK) $@ $<
 
