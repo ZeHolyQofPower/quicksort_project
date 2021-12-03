@@ -1,14 +1,14 @@
-Welcome to Adam Gazdecki's CSCE350 QuickSortProject.
+Welcome to Adam Gazdecki's CSCE350 QuickSort Project.
 A Median-of-Three Implementation and Empirical Analysis of the QuickSort Algorithm.
 # Directions for Compilation and Use.
-### 0. Stack Overflow Errors :(
+### 0. Stack Overflow Errors.  :(
 The elephant in the project are the segfaults. There is ONE bug I know about. I fully understand why and how it occures. How to fix it is beyond my abilities.
 
-When quicksorting arrays of size 'n', the stack depth is size 'n'. The stack in memory is filled with calls of my `QuickSort()` function over and over until it runs out of space. Using `gdb` on the core dump confirms this. Because I'm inexperienced at using `gdb`, `valgrind` with the flag `--verbose` also shows the stack overflow error clearly.
+When quicksorting arrays of size 'n', the stack depth is size 'n'. The stack in memory is filled with calls of my quicksort function over and over until it runs out of space. Using `gdb` on the core dump confirms this. Because I'm inexperienced at using `gdb`, `valgrind` with the flag `--verbose` also shows the stack overflow error clearly.
 
 I know my heap allocation is CLEAN. I have a single instance of "new" and a single instance of "delete" in the entire project. Valgrind also shows there are no possible memory leaks.
 
-I have tried my best to make sure I'm storing the array in the heap without copying. I am not moving the data on or off the stack. I am using minimal function calls in my main method. For example, I removed a separate partition function. I have confirmed, using some crazy goto statements I removed, that the completion of quicksort calls on the stack are occuring in a depth first order. I have tried allocating more memory for the stack by using the flag `-fsplit-stack`. I have asked every professor, cs-student, and friend that would listen about this bug and nobody has any idea how to help. So if you have ANY idea why my program does this and nobody elses, please please please tell me, it's benn driving me crazy.
+I have tried my best to make sure I'm storing the array in the heap without copying. I am not moving the data on or off the stack. I am using minimal function calls in my main method. For example, I removed a separate partition function. I have confirmed, using some crazy goto statements I removed, that the completion of quicksort calls on the stack are occuring in a depth first order. I have tried allocating more memory for the stack by using the flag `-fsplit-stack`. I have asked every professor, cs-student, and friend that would listen about this bug and nobody has any idea how to help. So if you have ANY idea why my program does this and nobody else's, please please please tell me, it's benn driving me crazy.
 ### 1. Download The Repository.
 You should be able to download the compressed package from dropbox.
 
