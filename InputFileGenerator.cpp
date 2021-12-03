@@ -43,10 +43,6 @@ int main(int argc, char* argv[]) {
     cout << "InputFileGenerator: Directory error" << endl << endl;
     cout << "Directory for output not found, or you may be on Windows."
          << endl << endl;
-/*
-    cout << "If error persists, please create directory named:" << endl;
-    cout << output_directory << endl << endl;
-*/
     return -2;  // "." Directory not found. This should never happen?
   }
   struct dirent* dir_itr;

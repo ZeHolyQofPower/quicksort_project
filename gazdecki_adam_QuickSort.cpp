@@ -16,7 +16,6 @@ int main(int argc, char* argv[]) {
   /* Tweakable Constants */
   const char* kSearchDirectoryPtr = ".";
   const string kFilePrefix = ".sorted_";  // This allows reasonable cleanup.
-  // TODO(gazdecki) Remove the usage of this prefix from final version.
   /* Check Command-Line Usage */
   if (argc != 3) {
     // Usage information:
@@ -233,7 +232,6 @@ void QuickSort(float* leftmost_index, float* rightmost_index,
 
 void WriteToFile(const string file_name, float** array_start_index,
                  const size_t length) {
-  // TODO(gazdecki) Is this supposed to have no newlines and end on space?
   const string kDelimiter = " ";
   std::ofstream output_stream;
   output_stream.open(file_name);

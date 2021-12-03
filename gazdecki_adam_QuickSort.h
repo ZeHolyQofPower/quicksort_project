@@ -15,7 +15,7 @@ using std::string;
 #include <chrono>  // Used for timing QuickSort function. NOLINT
 
 /* This function takes the values in a file, and writes them to a dynamically
- * allocated array. array is an output parameter.
+ * allocated array. Array is an output parameter.
  * I apologize for the usage of a pointer-to-a-pointer. I had never tried it
  * before and wanted to see how "bad" it was to implement. This was hard.
  * 
@@ -28,7 +28,7 @@ size_t ReadFromFile(const string file_name, float** array);
 /* This function quicksorts the values in an array.
  * It uses a median-of-three pivot.
  * 
- * Precondition: None?
+ * Precondition: None.
  */
 void QuickSort(float* leftmost_index, float* rightmost_index,
                size_t array_length, float** array);
