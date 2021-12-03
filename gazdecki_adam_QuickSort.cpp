@@ -80,9 +80,14 @@ int main(int argc, char* argv[]) {
   QuickSort(number_array, (number_array + array_length - 1), array_length,
             &number_array);
   auto end = std::chrono::steady_clock::now();
-  cout << "Time taken to sort file " << kUnsortedInputFile << " ";
-  cout << std::chrono::duration <double, std::milli> (end - start).count();
-  cout << " ms" << endl;
+  /* Append To Table */
+  std::ofstream output_stream("gazdecki_adam_executionTime.txt",
+                              std::fstream::app);
+  // cout << "Input Size Execution Time" << endl;
+  output_stream << array_length << " ";
+  output_stream
+    << std::chrono::duration <double, std::milli> (end - start).count();
+  output_stream << endl;
   /*
   cout << "Array Values After Quicksort Call:" << endl;
   PrintArray(&number_array, array_length);

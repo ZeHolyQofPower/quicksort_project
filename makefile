@@ -49,6 +49,7 @@ clean:# one-of-everything
 	@rm ./*.o
 	@rm InputFileGenerator
 	@rm gazdecki_adam_QuickSort
+	@rm gazdecki_adam_executionTime.txt
 	@rm .generated_*
 	@rm .sorted_*
 

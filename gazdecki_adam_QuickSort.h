@@ -12,7 +12,7 @@ using std::endl;
 using std::string;
 #include <fstream>  // Used for writing to files.
 #include <iterator>  // Used for counting elements in files.
-#include <chrono>  // Used for timing QuickSort function.
+#include <chrono>  // Used for timing QuickSort function. NOLINT
 
 /* This function takes the values in a file, and writes them to a dynamically
  * allocated array. array is an output parameter.
