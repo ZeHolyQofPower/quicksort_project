@@ -13,6 +13,7 @@ LINT = @~/Downloads/cpplint-master/cpplint.py --root=./
 
 ## Build ##
 build: InputFileGenerator gazdecki_adam_QuickSort
+	./create_gazdecki_adam_executionTime.bash
 
 ## QuickSort ##
 # Our QuickSort Project interacts with input file generator through arguments.
